@@ -156,6 +156,7 @@ int main(void) {
                         break;
                     case '*':
                         printCharLCD(keypadChar);
+                        
                         if (mode == program) {
                             nextState = invalid;
                         }
@@ -172,14 +173,21 @@ int main(void) {
                         break;
                     default:
                         printCharLCD(keypadChar);
-                        enteredPassword = (enteredPassword) << 8 + keypadChar;
-                        ++numPrinted;
                         
-                        if (numPrinted > 3) {
-                            if (mode == standard) nextState = checkPassword;
-                            else nextState = valid; //program mode
+                        if (mode == programPrime) {
+                            nextState = invalid;
                         }
-                        else nextState = waitPress;
+                        
+                        else {
+                            enteredPassword = (enteredPassword << 8) + keypadChar;
+                            ++numPrinted;
+
+                            if (numPrinted > 3) {
+                                if (mode == standard) nextState = checkPassword;
+                                else nextState = valid; //program mode
+                            }
+                            else nextState = waitPress;
+                        }
                         break;
                 }
                 break;

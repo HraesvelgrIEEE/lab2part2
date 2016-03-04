@@ -17,7 +17,7 @@ void initTimer1() {
     TMR1 = 0; //Clear timer
     T1CONbits.TCKPS = 3; //Prescalar 256
     T1CONbits.TCS = 0; //Set oscillator
-    PR1 = 78124; //PR for ~10 ms, rounded from 389.625
+    PR1 = 389; //PR for ~10 ms, rounded from 389.625
     IEC0bits.T1IE = 1; //Enable
     IFS0bits.T1IF = 0; //Flag down
     IPC1bits.T1IP = 7; //Default priority

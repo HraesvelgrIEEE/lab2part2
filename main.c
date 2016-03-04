@@ -64,7 +64,14 @@ int main(void) {
                 moveCursorLCD(0,0);
                 
                 if (numPasswords < MAX_PASSWORDS) {
-                    passwords[numPasswords++] = enteredPassword;
+                    int i = 0;
+                    for (i = 0; i != numPasswords; ++i) {
+                        if (passwords[i] == enteredPassword)
+                            break;
+                    }
+                    if (i == numPasswords)
+                        passwords[numPasswords++] = enteredPassword;
+                    
                     printStringLCD("Valid");
                 }
                 

@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/part2.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=part2.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=part2/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/372_lab2_part2.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=372_lab2_part2.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=372lab2part2/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/part2/bin
+makeDirectory ${TMPDIR}/372lab2part2/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/part2.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/372lab2part2.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/part2.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/372lab2part2.tar *
 checkReturnCode
 
 # Cleanup

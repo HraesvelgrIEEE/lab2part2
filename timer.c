@@ -8,8 +8,9 @@
 #include "timer.h"
 
 void initTimers() {
-    initTimer1();
+    //initTimer1();
     initTimer2();
+    initTimer32bit();
 }
 
 void initTimer1() {
@@ -28,6 +29,27 @@ void initTimer2() {
     T2CONbits.TCKPS = 0; //Prescalar 1
     T2CONbits.TCS = 0; 
     IFS0bits.T2IF = 0; //Flag down
+}
+
+void initTimer32bit() {
+    //Use timers 4 and 5
+    TMR4 = 0;
+    TMR5 = 0;
+    
+    T4CONbits.TCS = 0;
+    //T5CONbits.TCS = 0;
+    
+    T4CONbits.T32 = 1;
+    T4CONbits.TCKPS = 7;
+    
+    IFS0bits.T5IF = 0;
+    IEC0bits.T5IE = 1;
+    IPC5bits.T5IP = 7;
+    
+    PR4 = 0b0011000100101100;
+    PR5 = 0x01;
+    
+    T4CONbits.ON = 0;
 }
 
 void delayMs(unsigned int delay) {

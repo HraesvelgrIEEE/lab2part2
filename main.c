@@ -41,7 +41,7 @@ int main(void) {
                 mode = standard;
                 enteredPassword = 0;
                 numPrinted = 0;
-                T1CONbits.TON = 0; //Timer off
+                T4CONbits.TON = 0; //Timer off
                 
                 clearLCD();
                 moveCursorLCD(0, 0);
@@ -76,7 +76,7 @@ int main(void) {
                 
                 //ENABLE TIMER
                 TMR1 = 0;
-                T1CONbits.TON = 1; //Timer on
+                T4CONbits.TON = 1; //Timer on
                 
                 nextState = start;
                 state = wait;
@@ -88,7 +88,7 @@ int main(void) {
                 
                 //ENABLE TIMER
                 TMR1 = 0;
-                T1CONbits.TON = 1; //Timer on
+                T4CONbits.TON = 1; //Timer on
                 
                 nextState = start;
                 state = wait;
@@ -100,7 +100,7 @@ int main(void) {
                 
                 //ENABLE TIMER
                 TMR1 = 0;
-                T1CONbits.TON = 1; //Timer on
+                T4CONbits.TON = 1; //Timer on
                 
                 nextState = kudos;
                 state = wait;
@@ -112,7 +112,7 @@ int main(void) {
                 
                 //ENABLE TIMER
                 TMR1 = 0;
-                T1CONbits.TON = 1; //Timer on
+                T4CONbits.TON = 1; //Timer on
                 
                 nextState = start;
                 state = wait;
@@ -125,6 +125,8 @@ int main(void) {
                 printCharLCD(0b11101111);
                 
                 delayMs(100);
+                
+                state = start;
                 break;
                 
             //Wait states
@@ -154,7 +156,10 @@ int main(void) {
                         break;
                     case '*':
                         printCharLCD(keypadChar);
-                        if (mode == programPrime) {
+                        if (mode == program) {
+                            nextState = invalid;
+                        }
+                        else if (mode == programPrime) {
                             state = setMode; //We skip waiting for releasing the button on purpose! We're so cool!
                         }
                         else if (enteredPassword == 0) { //Not already entering password
@@ -193,8 +198,9 @@ int main(void) {
                     printStringLCD("(No saved codes)");
                     
                     TMR1 = 0;
-                    T1CONbits.TON = 1;
+                    T4CONbits.TON = 1;
                     
+                    nextState = start;
                     state = wait;
                 }
                 
@@ -229,8 +235,8 @@ __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt() {
     }
 }
 
-__ISR(_TIMER_1_VECTOR, IPL7SRS) _T1Interrupt() {
-    IFS0bits.T1IF = 0;
+__ISR(_TIMER_5_VECTOR, IPL7SRS) _T5Interrupt() {
+    IFS0bits.T5IF = 0;
     
     state = nextState;
 }
